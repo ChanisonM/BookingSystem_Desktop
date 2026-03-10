@@ -16,21 +16,20 @@ class BookingApp(ctk.CTk):
         self.label_title = ctk.CTkLabel(self, text="จองคิวรับบริการ", font=("Arial", 20 , "bold"))
         self.label_title.pack(pady=20)
 
-        self.entry_name = ctk.CTkEntry(self, placeholder_text="Name" , width=300)
+        self.entry_name = ctk.CTkEntry(self, placeholder_text="ชื่อจริง" , width=300)
         self.entry_name.pack(pady=10)
 
-        self.gender_var = ctk.StringVar(value="Male")
-        self.gender_menu = ctk.CTkOptionMenu(self, values=["Male", "Female" , "Other"] , variable=self.gender_var,width=300)
+        self.gender_var = ctk.StringVar(value="ชาย")
+        self.gender_menu = ctk.CTkOptionMenu(self, values=["ชาย", "หญิง" , "อื่นๆ"] , variable=self.gender_var,width=300)
         self.gender_menu.pack(pady=10)
 
-        self.entry_email = ctk.CTkEntry(self, placeholder_text="Email" , width=300)
+        self.entry_email = ctk.CTkEntry(self, placeholder_text="อีเมล" , width=300)
         self.entry_email.pack(pady=10)
 
 
-        vcmd = (self.register(self.validate_phone), '%P')  # %P คือค่าปัจจุบันในช่องกรอกหลังจากที่เรากดปุ่มบนคีย์บอร์ด
         self.entry_phone = ctk.CTkEntry(
             self, 
-            placeholder_text="Phone Number" , 
+            placeholder_text="หมายเลขโทรศัพท์" , 
             width=300,
            )  
         self.entry_phone.pack(pady=10)
@@ -50,7 +49,7 @@ class BookingApp(ctk.CTk):
             self.entry_phone.configure(border_color="red") # เปลี่ยนสีกรอบเป็นสีแดงเตือน
             self.label_title.configure(text="Error: หมายเลขโทรศัพท์ไม่ถูกต้อง" , text_color="red")
         else:
-            self.label_title.configure(text="")
+            self.label_title.configure(text="" , text_color="red")
             self.entry_phone.configure(border_color=["#979DA2", "#565B5E"]) # กลับเป็นสีปกติ
     
     def submit_booking(self):
@@ -89,6 +88,7 @@ class BookingApp(ctk.CTk):
         self.gender_var.set("Male")
         self.entry_email.delete(0, ctk.END)
         self.entry_phone.delete(0, ctk.END)
+        self.entry_name.focus()  # ตั้งโฟกัสกลับไปที่ช่องกรอกชื่อ
 
 if __name__ == "__main__":
     app = BookingApp()
