@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 import sqlite3
 
 def create_database():
@@ -14,11 +15,12 @@ def create_database():
                 gender TEXT NOT NULL,
                 email TEXT NOT NULL,
                 phone TEXT NOT NULL,
-                booking_date TEXT NOT NULL,
-                booking_time TEXT NOT NULL,
                 status TEXT DEFAULT 'Pending'
         )
     ''')
+
+                # booking_date TEXT NOT NULL,
+                # booking_time TEXT NOT NULL,
 
     conn.commit()  # บันทึกการเปลี่ยนแปลง
     conn.close()  # ปิดการเชื่อมต่อฐานข้อมูล
