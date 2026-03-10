@@ -51,9 +51,6 @@ class BookingApp(ctk.CTk):
             self.label_title.configure(text="" , text_color="red")
             self.entry_name.configure(border_color=["#979DA2", "#565B5E"])
 
-
-
-
     def validate_phone(self, event):
         P = self.entry_phone.get()
         if P != "" and (not P.isdigit() or len(P) > 10):
