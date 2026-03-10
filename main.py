@@ -79,11 +79,9 @@ class BookingApp(ctk.CTk):
         email = self.entry_email.get()
         phone = self.entry_phone.get()
     
-        
-        # email_pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-        # if not re.match(email_pattern, email):
-        #     self.label_title.configure(text="Error: รูปแบบอีเมลไม่ถูกต้อง" , text_color="red")
-        #     return
+        if name == "" or email == "" or phone == "":
+            self.label_title.configure(text="Error: กรุณากรอกข้อมูลให้ครบถ้วน" , text_color="red")
+            return
 
         try :
             conn = sqlite3.connect("booking_data.db")
