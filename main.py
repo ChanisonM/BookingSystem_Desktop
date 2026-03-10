@@ -13,32 +13,32 @@ class BookingApp(ctk.CTk):
         self.geometry("600x400")
 
        # --- ส่วนของฟอร์ม (UI Elements) ---
-        self.label_title = ctk.CTkLabel(self, text="จองคิวรับบริการ", font=("Arial", 20 , "bold"))
+        self.label_title = ctk.CTkLabel(self, text="Booking Sevice", font=("Arial", 20 , "bold"))
         self.label_title.pack(pady=20)
 
-        self.entry_name = ctk.CTkEntry(self, placeholder_text="ชื่อจริง" , width=300)
+        self.entry_name = ctk.CTkEntry(self, placeholder_text="Firstname" , width=300)
         self.entry_name.bind('<FocusOut>', self.validate_name)  
         self.entry_name.pack(pady=10)
 
-        self.gender_var = ctk.StringVar(value="ชาย")
-        self.gender_menu = ctk.CTkOptionMenu(self, values=["ชาย", "หญิง" , "อื่นๆ"] , variable=self.gender_var,width=300)
+        self.gender_var = ctk.StringVar(value="Male")
+        self.gender_menu = ctk.CTkOptionMenu(self, values=["Male", "Female" , "Other"] , variable=self.gender_var,width=300)
         self.gender_menu.pack(pady=10)
 
-        self.entry_email = ctk.CTkEntry(self, placeholder_text="อีเมล" , width=300)
+        self.entry_email = ctk.CTkEntry(self, placeholder_text="Email" , width=300)
         self.entry_email.bind('<FocusOut>', self.validate_email)
         self.entry_email.pack(pady=10)
 
 
         self.entry_phone = ctk.CTkEntry(
             self, 
-            placeholder_text="หมายเลขโทรศัพท์" , 
+            placeholder_text="Phone Number" , 
             width=300,
            )  
         self.entry_phone.pack(pady=10)
 
         self.entry_phone.bind('<FocusOut>', self.validate_phone)
 
-        self.button_submit = ctk.CTkButton(self, text="บันทึก", command=self.submit_booking)
+        self.button_submit = ctk.CTkButton(self, text="Save", command=self.submit_booking)
         self.button_submit.pack(pady=20)
 
 
@@ -46,7 +46,7 @@ class BookingApp(ctk.CTk):
         P = self.entry_name.get()
         if P == "" :
             self.entry_name.configure(border_color="red")
-            self.label_title.configure(text="Error: ชื่อไม่ถูกต้อง" , text_color="red")
+            self.label_title.configure(text="Error: Name is invalid" , text_color="red")
         else:
             self.label_title.configure(text="" , text_color="red")
             self.entry_name.configure(border_color=["#979DA2", "#565B5E"])
@@ -55,7 +55,7 @@ class BookingApp(ctk.CTk):
         P = self.entry_phone.get()
         if P != "" and (not P.isdigit() or len(P) > 10):
             self.entry_phone.configure(border_color="red") # เปลี่ยนสีกรอบเป็นสีแดงเตือน
-            self.label_title.configure(text="Error: หมายเลขโทรศัพท์ไม่ถูกต้อง" , text_color="red")
+            self.label_title.configure(text="Error: Phone number is invalid" , text_color="red")
         else:
             self.label_title.configure(text="" , text_color="red")
             self.entry_phone.configure(border_color=["#979DA2", "#565B5E"]) # กลับเป็นสีปกติ
@@ -65,7 +65,7 @@ class BookingApp(ctk.CTk):
         email_pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         if email != "" and not re.match(email_pattern, email):
             self.entry_email.configure(border_color="red") # เปลี่ยนสีกรอบเป็นสีแดงเตือน
-            self.label_title.configure(text="Error: รูปแบบอีเมลไม่ถูกต้อง" , text_color="red")
+            self.label_title.configure(text="Error: Email format is invalid" , text_color="red")
         else:
             self.label_title.configure(text="" , text_color="red")
             self.entry_email.configure(border_color=["#979DA2", "#565B5E"]) # กลับเป็นสีปกติ 
@@ -77,7 +77,7 @@ class BookingApp(ctk.CTk):
         phone = self.entry_phone.get()
     
         if name == "" or email == "" or phone == "":
-            self.label_title.configure(text="Error: กรุณากรอกข้อมูลให้ครบถ้วน" , text_color="red")
+            self.label_title.configure(text="Error: Please fill in all fields" , text_color="red")
             return
 
         try :
