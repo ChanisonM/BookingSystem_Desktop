@@ -17,6 +17,7 @@ class BookingApp(ctk.CTk):
         self.label_title.pack(pady=20)
 
         self.entry_name = ctk.CTkEntry(self, placeholder_text="ชื่อจริง" , width=300)
+        self.entry_name.bind('<FocusOut>', self.validate_name)  
         self.entry_name.pack(pady=10)
 
         self.gender_var = ctk.StringVar(value="ชาย")
@@ -24,6 +25,7 @@ class BookingApp(ctk.CTk):
         self.gender_menu.pack(pady=10)
 
         self.entry_email = ctk.CTkEntry(self, placeholder_text="อีเมล" , width=300)
+        self.entry_email.bind('<FocusOut>', self.validate_email)
         self.entry_email.pack(pady=10)
 
 
@@ -39,12 +41,21 @@ class BookingApp(ctk.CTk):
         self.button_submit = ctk.CTkButton(self, text="บันทึก", command=self.submit_booking)
         self.button_submit.pack(pady=20)
 
+
+    def validate_name(self, event):
+        P = self.entry_name.get()
+        if P == "" :
+            self.entry_name.configure(border_color="red")
+            self.label_title.configure(text="Error: ชื่อไม่ถูกต้อง" , text_color="red")
+        else:
+            self.label_title.configure(text="" , text_color="red")
+            self.entry_name.configure(border_color=["#979DA2", "#565B5E"])
+
+
+
+
     def validate_phone(self, event):
-        # P คือค่าปัจจุบันในช่องกรอกหลังจากที่เรากดปุ่มบนคีย์บอร์ด
-        # เงื่อนไข: ถ้าเป็นค่าว่าง (ลบจนหมด) หรือ เป็นตัวเลขล้วน และยาวไม่เกิน 10 หลัก
-        
         P = self.entry_phone.get()
-        # ถ้าไม่เป็นตัวเลข หรือ ยาวเกิน 10 หลัก
         if P != "" and (not P.isdigit() or len(P) > 10):
             self.entry_phone.configure(border_color="red") # เปลี่ยนสีกรอบเป็นสีแดงเตือน
             self.label_title.configure(text="Error: หมายเลขโทรศัพท์ไม่ถูกต้อง" , text_color="red")
@@ -52,21 +63,27 @@ class BookingApp(ctk.CTk):
             self.label_title.configure(text="" , text_color="red")
             self.entry_phone.configure(border_color=["#979DA2", "#565B5E"]) # กลับเป็นสีปกติ
     
+    def validate_email(self, event):   
+        email = self.entry_email.get()
+        email_pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        if email != "" and not re.match(email_pattern, email):
+            self.entry_email.configure(border_color="red") # เปลี่ยนสีกรอบเป็นสีแดงเตือน
+            self.label_title.configure(text="Error: รูปแบบอีเมลไม่ถูกต้อง" , text_color="red")
+        else:
+            self.label_title.configure(text="" , text_color="red")
+            self.entry_email.configure(border_color=["#979DA2", "#565B5E"]) # กลับเป็นสีปกติ 
+   
     def submit_booking(self):
         name = self.entry_name.get()
         gender = self.gender_var.get()
         email = self.entry_email.get()
         phone = self.entry_phone.get()
-      
-    #   From Validate 
-        if not name:
-            self.label_title.configure(text="Error: ชื่อไม่สามารถเว้นว่างได้" , text_color="red")
-            return
+    
         
-        email_pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-        if not re.match(email_pattern, email):
-            self.label_title.configure(text="Error: รูปแบบอีเมลไม่ถูกต้อง" , text_color="red")
-            return
+        # email_pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+        # if not re.match(email_pattern, email):
+        #     self.label_title.configure(text="Error: รูปแบบอีเมลไม่ถูกต้อง" , text_color="red")
+        #     return
 
         try :
             conn = sqlite3.connect("booking_data.db")
