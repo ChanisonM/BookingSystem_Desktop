@@ -15,7 +15,8 @@ def create_database():
                 gender TEXT NOT NULL,
                 email TEXT NOT NULL,
                 phone TEXT NOT NULL,
-                status TEXT DEFAULT 'Pending'
+                status TEXT DEFAULT 'Pending',
+                booking_time TEXT NOT NULL
         )
     ''')
 
